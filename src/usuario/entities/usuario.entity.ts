@@ -6,7 +6,8 @@ export type UserDocument = Usuario & Document;
 @Schema()
 export class Usuario {
   
-  _id: mongoose.Types.ObjectId;
+  id: mongoose.Types.ObjectId;
+  
   @Prop()
   usuario: string;
 

@@ -7,6 +7,7 @@ import { UserDocument, Usuario } from './entities/usuario.entity';
 
 @Injectable()
 export class UsuarioService {
+  //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       findOne: any;
 
   constructor(@InjectModel('usuario') private readonly userModel: Model<UserDocument>) { }
 
@@ -17,9 +18,22 @@ export class UsuarioService {
           clave,
       });
   }
-  async getUser( usuario ): Promise<Usuario> {
+  async getUser(usuario): Promise<Usuario> {
     
-      return await this.userModel.findOne({usuario:usuario});
+    return await this.userModel.findOne({usuario:usuario})
+    
   }
+
+  async findOne(_id: string): Promise<Usuario> {
+    
+    const usuarioid = await this.userModel.findById(_id)
+    return usuarioid;
+  }
+
+  async findAll(): Promise<Usuario[]> {
+    const usuariosAll= await this.userModel.find()
+    return usuariosAll;
+  }
+ 
   
 }
