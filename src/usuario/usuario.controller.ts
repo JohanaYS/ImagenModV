@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
 
 @ApiTags('usuarios')
@@ -37,6 +38,20 @@ export class UsuarioController {
     @Get()
     findAll(){
       return this.usuarioService.findAll();
+    }
+
+    @ApiBearerAuth('JWT-auth') //cambio 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateUsuarioDto:UpdateUsuarioDto) {
+      return this.usuarioService.update(id, updateUsuarioDto)
+    }
+
+    @ApiBearerAuth('JWT-auth') //cambio 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+      return this.usuarioService.delete(id);
     }
    
 
