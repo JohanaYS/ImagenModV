@@ -9,7 +9,7 @@ export class CreateUsuarioDto {
     usuario:string;
 
     @ApiProperty()
-    @Length(5, 10) //decorador longitud entre 1 y 10 caracteres
+    @Length(5, 15) //decorador longitud entre 1 y 10 caracteres
     clave:string;
 
 }

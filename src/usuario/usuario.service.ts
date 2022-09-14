@@ -24,9 +24,9 @@ export class UsuarioService {
     
   }
 
-  async findOne(_id: string): Promise<Usuario> {
+  async findOne(id: string): Promise<Usuario> {
     
-    const usuarioid = await this.userModel.findById(_id)
+    const usuarioid = await this.userModel.findById(id)
     return usuarioid;
   }
 

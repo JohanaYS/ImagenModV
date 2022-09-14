@@ -8,8 +8,7 @@ import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 
 
 @ApiTags('usuarios')
-@ApiBearerAuth('JWT-auth') //cambio 2
-@UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+
 @Controller('usuario')
 
 export class UsuarioController {
@@ -26,11 +25,15 @@ export class UsuarioController {
 
 
     //@ApiBody({type: CreateUsuarioDto}) //cambio 3
-    @Get('/id')
+    @ApiBearerAuth('JWT-auth') //cambio 2
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    @Get(':id')
     findOne(@Param('id') id: string) {
       return this.usuarioService.findOne(id);
     }
 
+    @ApiBearerAuth('JWT-auth') //cambio 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
     @Get()
     findAll(){
       return this.usuarioService.findAll();
