@@ -23,7 +23,6 @@ async function bootstrap() {
   
   .setDescription('Auntenticación')
   .setVersion('1.0')
-  .addTag('wallpapers')
   .addTag('usuarios')
   .addTag('categorias')
   .build();
