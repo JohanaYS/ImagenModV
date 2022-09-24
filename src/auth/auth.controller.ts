@@ -1,12 +1,12 @@
 import { Controller, Request, Post, UseGuards, Get } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { CreateUsuarioDto } from 'src/usuario/dto/create-usuario.dto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
-@ApiBearerAuth('JWT-auth') //cambio 1 para ver secreto
-@Controller()
+@ApiTags('auth')
+@Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {
         
@@ -21,6 +21,7 @@ export class AuthController {
     }
 
     //Aseguramos la ruta
+    @ApiBearerAuth('JWT-auth') //cambio 1 para ver secreto
     @UseGuards(JwtAuthGuard) //hay que enviar el token
     @Get('secreto')
     secreto(@Request() req) {

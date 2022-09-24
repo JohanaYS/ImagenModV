@@ -23,6 +23,7 @@ async function bootstrap() {
   
   .setDescription('Auntenticación')
   .setVersion('1.0')
+  .addTag('auth')
   .addTag('usuarios')
   .addTag('categorias')
   .build();

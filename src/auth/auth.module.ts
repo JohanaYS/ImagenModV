@@ -9,6 +9,7 @@ import { UsuarioSchema } from "src/usuario/entities/usuario.entity";
 import { UsuarioModule } from "src/usuario/usuario.module";
 import { UsuarioService } from "src/usuario/usuario.service";
 import { JwtStrategy } from "./strategies/jwt.strategy";
+import { RolesGuard } from "./guards/roles.guard";
 
 
 

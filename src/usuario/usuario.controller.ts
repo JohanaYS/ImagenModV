@@ -6,6 +6,10 @@ import * as bcrypt from 'bcrypt';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { Roles } from 'src/role/roles.decorator';
+import { Role } from 'src/role/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+
 
 
 @ApiTags('usuarios')
@@ -15,7 +19,8 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 export class UsuarioController {
 
   constructor(private readonly usuarioService: UsuarioService) {}
-  //@ApiBody({type: CreateUsuarioDto}) //cambio 3
+  
+  //CREAR
   @Post('/crear') //se envia un json { "usuario":"Administrador",  "clave":"123456" }
     async createUser(@Body() datos:CreateUsuarioDto): Promise<Usuario> {
         const saltOrRounds = 10;
@@ -25,33 +30,49 @@ export class UsuarioController {
     }
 
 
-    //@ApiBody({type: CreateUsuarioDto}) //cambio 3
-    @ApiBearerAuth('JWT-auth') //cambio 2
+    //BUSCAR UNO
+    @ApiBearerAuth('JWT-auth') 
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
     @Get(':id')
     findOne(@Param('id') id: string) {
       return this.usuarioService.findOne(id);
     }
 
-    @ApiBearerAuth('JWT-auth') //cambio 
-    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+
+    //BUSCAR TODOS
+    @Roles(Role.Admin)
+    @ApiBearerAuth('JWT-auth') 
+    @UseGuards(JwtAuthGuard, RolesGuard) //necesita un token para consultar este recurso
     @Get()
     findAll(){
       return this.usuarioService.findAll();
     }
 
-    @ApiBearerAuth('JWT-auth') //cambio 
+    //ACTUALIZAR
+    @ApiBearerAuth('JWT-auth')  
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
     @Put(':id')
     update(@Param('id') id: string, @Body() updateUsuarioDto:UpdateUsuarioDto) {
       return this.usuarioService.update(id, updateUsuarioDto)
     }
+    
 
-    @ApiBearerAuth('JWT-auth') //cambio 
+    //ELIMINAR
+    @ApiBearerAuth('JWT-auth') 
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
     @Delete(':id')
     delete(@Param('id') id: string) {
       return this.usuarioService.delete(id);
+    }
+
+
+    //BUSCAR POR NOMBRE
+    @ApiBearerAuth('JWT-auth') //cambio 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    @Get('/buscarUno')
+    async getName(@Param('usuario') usuario: string) : Promise<Usuario> {
+      const resultado= await this.usuarioService.getName(usuario)
+      return resultado;
     }
    
 
