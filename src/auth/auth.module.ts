@@ -18,7 +18,7 @@ import { RolesGuard } from "./guards/roles.guard";
     secret: 'secretKey',
     signOptions: { expiresIn: '30m' },
   }), MongooseModule.forFeature([{ name: "usuario", schema: UsuarioSchema }])],
-  providers: [AuthService, UsuarioService, LocalStrategy,JwtStrategy],
+  providers: [AuthService, UsuarioService, LocalStrategy,JwtStrategy, RolesGuard],
   controllers: [AuthController],
 })
 export class AuthModule { }

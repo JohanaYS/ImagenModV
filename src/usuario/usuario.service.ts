@@ -52,7 +52,7 @@ export class UsuarioService {
     if (!usuarioid){
       throw new NotFoundException('No se realizo')
     }
-    return usuarioid
+    return usuarioid;
   }
 
 

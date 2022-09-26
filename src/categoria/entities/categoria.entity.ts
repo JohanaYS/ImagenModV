@@ -8,7 +8,7 @@ export class Categoria {
 
     id: mongoose.Types.ObjectId;
 
-    @Prop({unique:true})
+    @Prop({lowercase: true, unique:true})
     title: string;
 }
 

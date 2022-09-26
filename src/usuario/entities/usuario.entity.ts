@@ -9,14 +9,14 @@ export class Usuario {
   
   id: mongoose.Types.ObjectId;
   
-  @Prop({unique:true})
+  @Prop({lowercase: true, unique:true})
   usuario: string;
 
   @Prop()
   clave: string;
 
-  @Prop({ enum: Role,  default: Role.User})
-  roles: String[];
+  @Prop(/* { type: String,  default: Role.User} */)
+  roles: Role[];
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);

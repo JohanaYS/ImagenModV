@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CategoriaService } from './categoria.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
@@ -9,28 +10,43 @@ import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 export class CategoriaController {
   constructor(private readonly categoriaService: CategoriaService) {}
 
-  @Post()
+  //CREAR
+  @ApiBearerAuth('JWT-auth') 
+  @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+  @Post('/crear')
   create(@Body() createCategoriaDto: CreateCategoriaDto) {
-    return this.categoriaService.create(createCategoriaDto);
+    return this.categoriaService.createImagen(createCategoriaDto);
   }
 
+  //BUSCAR TODOS
+  @ApiBearerAuth('JWT-auth') 
+  @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
   @Get()
-  findAll() {
+  findAll(){
     return this.categoriaService.findAll();
   }
 
+  //BUSCAR UNO
+  @ApiBearerAuth('JWT-auth') 
+  @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.categoriaService.findOne(+id);
+    return this.categoriaService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoriaDto: UpdateCategoriaDto) {
-    return this.categoriaService.update(+id, updateCategoriaDto);
+  //ACTUALIZAR
+  @ApiBearerAuth('JWT-auth') //cambio 
+  @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCategoriaDto:UpdateCategoriaDto) {
+    return this.categoriaService.update(id, updateCategoriaDto)
   }
 
+  //ELIMINAR
+  @ApiBearerAuth('JWT-auth') //cambio 
+  @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoriaService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.categoriaService.delete(id);
   }
 }

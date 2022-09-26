@@ -36,7 +36,7 @@ export class ImagenService {
     if (!imagenid){
       throw new NotFoundException('No se realizo')
     }
-    return imagenid
+    return imagenid;
   }
 
   //ELIMINAR

@@ -11,7 +11,7 @@ export class RolesGuard implements CanActivate {
     
     canActivate( context: ExecutionContext): boolean {
 
-        const requiredRoles: string[] = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY,  
+        const requiredRoles: Role[] = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY,  
            [
             context.getHandler(),   //OBTENER CONTEXTO. Para saber el metodo y el controller utilizado en nuestra guardia para acceder a los metadatos
             context.getClass(),
@@ -24,7 +24,8 @@ export class RolesGuard implements CanActivate {
 
         //OBTENER EL USUARIO Y SU ROL DE MOMENTO
         const {usuario} = context.switchToHttp().getRequest();
+      
         
-        return requiredRoles.some((role) => usuario.roles?.include(role));
+        return requiredRoles.some((role) => usuario.role?.include(role));
     }
 }

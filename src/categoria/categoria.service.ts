@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
+import { Categoria, CategoriaDocument } from './entities/categoria.entity';
 
 @Injectable()
 export class CategoriaService {
-  create(createCategoriaDto: CreateCategoriaDto) {
-    return 'This action adds a new categoria';
+  constructor(@InjectModel('categoria') private readonly categoriaModel: Model<CategoriaDocument>) { }
+
+
+  //CREAR
+  async createImagen(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
+    return (await this.categoriaModel.create(createCategoriaDto));
+  }
+  
+  //BUSCAR TODOS
+  async findAll(): Promise<Categoria[]> {
+    const categoriaAll= await this.categoriaModel.find()
+    return categoriaAll;
   }
 
-  findAll() {
-    return `This action returns all categoria`;
+  //BUSCAR UNO
+  async findOne(id: string): Promise<Categoria> {
+    const categoriaid = await this.categoriaModel.findById(id);
+    if (!categoriaid){
+      throw new BadRequestException('No encontrado')
+    }
+    return categoriaid;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} categoria`;
+  //ACTUALIZAR
+  async update(id: string, updateCategoriaDto: UpdateCategoriaDto) {
+    const categoriaid = await this.categoriaModel.findByIdAndUpdate(id, updateCategoriaDto).setOptions({new:true});
+    if (!categoriaid){
+      throw new NotFoundException('No se realizo')
+    }
+    return categoriaid;
   }
 
-  update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
-    return `This action updates a #${id} categoria`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} categoria`;
+  //ELIMINAR
+  async delete(id:string): Promise<Categoria> {
+    return await this.categoriaModel.findByIdAndDelete(id);
   }
 }
