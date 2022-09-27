@@ -40,11 +40,11 @@ export class UsuarioController {
 
 
     //BUSCAR TODOS
-    @Roles(Role.Admin)
-    @ApiBearerAuth('JWT-auth') 
+   // @Roles(Role.Admin)
+    @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard, RolesGuard) //necesita un token para consultar este recurso
     @Get()
-    findAll(){
+    findAll():Promise<Usuario[]> {
       return this.usuarioService.findAll();
     }
 

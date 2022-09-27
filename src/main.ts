@@ -41,6 +41,12 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe()); //para que la plicacion entera haga uso de los pipes, el pipes de validacion
 
   //**************************** */
+
+  /** CORS SEGURIDAD*/
+  app.enableCors({
+    origin:['http://localhost:4200']
+  });
+  /****/
   await app.listen(3000);
 }
 bootstrap();

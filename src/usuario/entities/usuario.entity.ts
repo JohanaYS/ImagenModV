@@ -15,8 +15,8 @@ export class Usuario {
   @Prop()
   clave: string;
 
-  @Prop(/* { type: String,  default: Role.User} */)
-  roles: Role[];
+  /* @Prop( { type: String,  default: Role.User} )
+  roles: Role[]; */
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);
