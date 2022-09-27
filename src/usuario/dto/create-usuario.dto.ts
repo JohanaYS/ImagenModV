@@ -1,11 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty,IsString,Length } from "class-validator";
+import { IsAlphanumeric, Length } from "class-validator";
 
 export class CreateUsuarioDto {
     
     @ApiProperty()
     @Length(3,20) //decorador @IsNotEmpty "no este vacio"
-    @IsString()
+    @IsAlphanumeric()
     usuario:string;
 
     @ApiProperty()

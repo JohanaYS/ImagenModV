@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Exclude } from "class-transformer";
-import { IsString,Length } from "class-validator";
+import { IsAlphanumeric, Length } from "class-validator";
 
 export class UpdateUsuarioDto {
 
     @ApiProperty()
-    @Length(3,8) //decorador @IsNotEmpty "no este vacio"
-    @IsString()
+    @Length(3,20) //decorador @IsNotEmpty "no este vacio"
+    @IsAlphanumeric()
     usuario:string;
 
     @Exclude()

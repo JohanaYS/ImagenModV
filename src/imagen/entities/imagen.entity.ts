@@ -8,14 +8,11 @@ export class Imagen {
 
     id: mongoose.Types.ObjectId;
 
-    @Prop({lowercase: true, unique:true})
-    title: string;
-
     @Prop({type: Date.now})
     createOn: Date;
 
-    @Prop({type:URL, unique:true})
-    mainImageUrl: URL;
+    @Prop({unique:true})
+    mainImageUrl: string;
 }
 
 export const ImagenSchema = SchemaFactory.createForClass(Imagen);
