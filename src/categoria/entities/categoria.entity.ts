@@ -8,8 +8,9 @@ export class Categoria {
 
     id: mongoose.Types.ObjectId;
 
-    @Prop({lowercase: true, unique:true})
+    @Prop({lowercase: true, unique:true, trim:true})
     title: string;
+
 }
 
 export const CategoriaSchema = SchemaFactory.createForClass(Categoria);

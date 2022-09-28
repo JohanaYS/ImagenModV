@@ -7,7 +7,7 @@ export class Role {
 
     id: mongoose.Types.ObjectId;
 
-    @Prop({lowercase: true, unique:true})
+    @Prop({lowercase: true, unique:true, trim:true})
     title: string;
 
 }

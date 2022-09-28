@@ -8,10 +8,10 @@ export class Imagen {
 
     id: mongoose.Types.ObjectId;
 
-    @Prop({type: Date.now})
+    @Prop({timestamps: true})
     createOn: Date;
 
-    @Prop({unique:true})
+    @Prop({unique:true, trim:true})
     mainImageUrl: string;
 }
 

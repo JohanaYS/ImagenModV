@@ -63,13 +63,6 @@ export class UsuarioService {
     const userDelete = await this.userModel.findByIdAndDelete(id)
     return userDelete;
   }
-
-
-   //BUSCAR POR NOMBRE
-   async getName(usuario): Promise<Usuario> {
-    return await this.userModel.findOne({usuario:usuario});
-  }
-
  
   
 }

@@ -1,9 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsUrl } from "class-validator";
+import { IsFQDN, IsNotEmpty } from "class-validator";
+import { Usuario } from "src/usuario/entities/usuario.entity";
 
 export class CreateImagenDto {
 
     @ApiProperty()
-    @IsUrl()
+    @IsNotEmpty({message:'No puede ir vacio'})
+    @IsFQDN()
     mainImageUrl: string;
+
+    @ApiProperty()
+    autor: Usuario;
 }

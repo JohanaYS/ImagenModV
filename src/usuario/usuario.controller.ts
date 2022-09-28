@@ -69,9 +69,9 @@ export class UsuarioController {
     //BUSCAR POR NOMBRE
     @ApiBearerAuth('JWT-auth') //cambio 
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
-    @Get('/buscarUno')
-    async getName(@Param('usuario') usuario: string) : Promise<Usuario> {
-      const resultado= await this.usuarioService.getName(usuario)
+    @Get('/buscarUno') 
+    async getUser(@Body('usuario') usuario: string): Promise<Usuario>{
+      const resultado= await this.usuarioService.getUser(usuario)
       return resultado;
     }
    
