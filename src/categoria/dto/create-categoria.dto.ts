@@ -14,7 +14,5 @@ export class CreateCategoriaDto {
     @Length(3, 20)
     title: string;
 
-    imagenes: CreateImagenDto[];
-
 }
 

@@ -13,7 +13,4 @@ export class CreateUsuarioDto {
     @Length(5,40) //decorador longitud entre 1 y 10 caracteres
     clave:string;
 
-    @ApiProperty()
-    rol:Role;
-
 }

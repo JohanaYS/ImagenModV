@@ -9,6 +9,4 @@ export class CreateImagenDto {
     @IsFQDN()
     mainImageUrl: string;
 
-    @ApiProperty()
-    autor: Usuario;
 }
