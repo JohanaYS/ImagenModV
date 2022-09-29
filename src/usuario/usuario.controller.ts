@@ -31,8 +31,8 @@ export class UsuarioController {
 
 
     //BUSCAR UNO
-    @ApiBearerAuth('JWT-auth') 
-    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    /* @ApiBearerAuth('JWT-auth') 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
     @Get(':id')
     findOne(@Param('id') id: string) {
       return this.usuarioService.findOne(id);
@@ -41,16 +41,16 @@ export class UsuarioController {
 
     //BUSCAR TODOS
    // @Roles(Role.Admin)
-    @ApiBearerAuth('JWT-auth')
-    @UseGuards(JwtAuthGuard, RolesGuard) //necesita un token para consultar este recurso
+    /* @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard, RolesGuard) //necesita un token para consultar este recurso */
     @Get()
     findAll():Promise<Usuario[]> {
       return this.usuarioService.findAll();
     }
 
     //ACTUALIZAR
-    @ApiBearerAuth('JWT-auth')  
-    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    /* @ApiBearerAuth('JWT-auth')  
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
     @Put(':id')
     update(@Param('id') id: string, @Body() updateUsuarioDto:UpdateUsuarioDto) {
       return this.usuarioService.update(id, updateUsuarioDto)
@@ -58,8 +58,8 @@ export class UsuarioController {
     
 
     //ELIMINAR
-    @ApiBearerAuth('JWT-auth') 
-    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    /* @ApiBearerAuth('JWT-auth') 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
     @Delete(':id')
     delete(@Param('id') id: string) {
       return this.usuarioService.delete(id);
@@ -67,11 +67,11 @@ export class UsuarioController {
 
 
     //BUSCAR POR NOMBRE
-    @ApiBearerAuth('JWT-auth') //cambio 
-    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
+    /* @ApiBearerAuth('JWT-auth') //cambio 
+    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
     @Get('/buscarUno') 
     async getUser(@Body('usuario') usuario: string): Promise<Usuario>{
-      const resultado= await this.usuarioService.getUser(usuario)
+      const resultado= await this.usuarioService.getByName(usuario)
       return resultado;
     }
    
