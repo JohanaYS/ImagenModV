@@ -9,16 +9,15 @@ import { UsuarioSchema } from "src/usuario/entities/usuario.entity";
 import { UsuarioModule } from "src/usuario/usuario.module";
 import { UsuarioService } from "src/usuario/usuario.service";
 import { JwtStrategy } from "./strategies/jwt.strategy";
-import { RolesGuard } from "./guards/roles.guard";
 
 
 
 @Module({
   imports: [UsuarioModule, PassportModule, JwtModule.register({
     secret: 'secretKey',
-    signOptions: { expiresIn: '30m' },
+    signOptions: { expiresIn: '1h' },
   }), MongooseModule.forFeature([{ name: "usuario", schema: UsuarioSchema }])],
-  providers: [AuthService, UsuarioService, LocalStrategy,JwtStrategy, RolesGuard],
+  providers: [AuthService, UsuarioService, LocalStrategy,JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule { }

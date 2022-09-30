@@ -15,7 +15,7 @@ export class AuthService {
         const validarPassword = await bcrypt.compare(usuarioDTO.clave, usuario.clave)
         if (usuario && validarPassword) {
             
-            const payload = { usuario: usuario.usuario,id:usuario.id };
+            const payload = { usuario: usuario.usuario,id:usuario._id };
         return {
             access_token: this.jwtService.sign(payload),
         };

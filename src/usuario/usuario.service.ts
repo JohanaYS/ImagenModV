@@ -20,7 +20,7 @@ export class UsuarioService {
 
 
 
-  //LOGIN
+  //LOGIN Y BUSCAR POR NOMBRE
   async getUser(usuario): Promise<Usuario>{
     return await this.userModel.findOne({usuario:usuario});
   }
@@ -35,7 +35,7 @@ export class UsuarioService {
 
 
 
-  //BUSCAR UNO
+  //BUSCAR POR ID
   async findOne(id: string): Promise<Usuario> {
     const usuarioid = await this.userModel.findById(id);
     if (!usuarioid){
@@ -57,20 +57,12 @@ export class UsuarioService {
   }
 
 
-
-  //ELIMINAR
+  //ELIMINAR POR ID
   async delete(id:string): Promise<Usuario> {
     const userDelete = await this.userModel.findByIdAndDelete(id)
     return userDelete;
   }
 
 
-
-  //BUSCAR POR NOMBRE
-  async getByName(usuario:string): Promise<Usuario> {
-    const user= await this.userModel.findOne({ usuario });
-    return user;
-  }
- 
   
 }

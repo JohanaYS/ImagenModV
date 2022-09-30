@@ -3,12 +3,10 @@ import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { Roles } from 'src/role/roles.decorator';
-import { Role } from 'src/role/role.enum';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ACGuard, UseRoles } from 'nest-access-control';
 
 
 
@@ -40,9 +38,9 @@ export class UsuarioController {
 
 
     //BUSCAR TODOS
-   // @Roles(Role.Admin)
-    /* @ApiBearerAuth('JWT-auth')
-    @UseGuards(JwtAuthGuard, RolesGuard) //necesita un token para consultar este recurso */
+    @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard, ACGuard) //necesita un token para consultar este recurso
+    @UseRoles({possession: 'any', action: 'read', resource: 'imagens'})
     @Get()
     findAll():Promise<Usuario[]> {
       return this.usuarioService.findAll();
@@ -51,29 +49,21 @@ export class UsuarioController {
     //ACTUALIZAR
     /* @ApiBearerAuth('JWT-auth')  
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-    @Put(':id')
-    update(@Param('id') id: string, @Body() updateUsuarioDto:UpdateUsuarioDto) {
-      return this.usuarioService.update(id, updateUsuarioDto)
+    @ApiBody({type:UpdateUsuarioDto})
+    @Put('/actualizar/:id') 
+        async updateUser(@Param('id')_id:string, @Body() datos:UpdateUsuarioDto): Promise<Usuario> {
+        const result = await this.usuarioService.update(_id, datos);
+        return result;
     }
     
 
     //ELIMINAR
     /* @ApiBearerAuth('JWT-auth') 
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-    @Delete(':id')
-    delete(@Param('id') id: string) {
-      return this.usuarioService.delete(id);
-    }
-
-
-    //BUSCAR POR NOMBRE
-    /* @ApiBearerAuth('JWT-auth') //cambio 
-    @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-    @Get('/buscarUno') 
-    async getUser(@Body('usuario') usuario: string): Promise<Usuario>{
-      const resultado= await this.usuarioService.getByName(usuario)
-      return resultado;
-    }
+    @Delete('/eliminar/:id') 
+      async deleteUser(@Param('id')_id:string): Promise<Usuario> {
+          return this.usuarioService.delete(_id);
+      }
    
 
 }

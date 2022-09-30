@@ -4,6 +4,9 @@ import { IsAlphanumeric, Length } from "class-validator";
 
 export class UpdateUsuarioDto {
 
+    @Exclude()
+    id: string;
+
     @ApiProperty()
     @Length(3,20) //decorador @IsNotEmpty "no este vacio"
     @IsAlphanumeric()
@@ -11,6 +14,12 @@ export class UpdateUsuarioDto {
 
     @Exclude()
     clave:string;
+
+    @ApiProperty()
+    rol:string;
+
+    @ApiProperty()
+    activo: boolean;
 
 
 }

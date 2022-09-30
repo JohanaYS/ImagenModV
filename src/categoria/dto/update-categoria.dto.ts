@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateCategoriaDto } from './create-categoria.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
+import { IsNotEmpty, Length } from 'class-validator';
 
-export class UpdateCategoriaDto extends PartialType(CreateCategoriaDto) {}
+export class UpdateCategoriaDto {
+
+    @Exclude()
+    _id: string;
+
+    @ApiProperty()
+    @IsNotEmpty({message: 'El nombre de categoría no puede ir vacío'})
+    @Length(3, 20)
+    title: string;
+
+}
