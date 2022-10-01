@@ -38,9 +38,9 @@ export class UsuarioController {
 
 
     //BUSCAR TODOS
-    @ApiBearerAuth('JWT-auth')
-    @UseGuards(JwtAuthGuard, ACGuard) //necesita un token para consultar este recurso
-    @UseRoles({possession: 'any', action: 'read', resource: 'imagens'})
+    /* @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard, ACGuard) //necesita un token para consultar este recurso */
+    //@UseRoles({possession: 'any', action: 'read', resource: 'imagens'}) 
     @Get()
     findAll():Promise<Usuario[]> {
       return this.usuarioService.findAll();
@@ -49,10 +49,9 @@ export class UsuarioController {
     //ACTUALIZAR
     /* @ApiBearerAuth('JWT-auth')  
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-    @ApiBody({type:UpdateUsuarioDto})
-    @Put('/actualizar/:id') 
-        async updateUser(@Param('id')_id:string, @Body() datos:UpdateUsuarioDto): Promise<Usuario> {
-        const result = await this.usuarioService.update(_id, datos);
+    @Put('/actualizar') 
+        async updateUser(@Param('id')id:string, @Body() datos:UpdateUsuarioDto): Promise<Usuario> {
+        const result = await this.usuarioService.update(id, datos);
         return result;
     }
     
@@ -60,9 +59,9 @@ export class UsuarioController {
     //ELIMINAR
     /* @ApiBearerAuth('JWT-auth') 
     @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-    @Delete('/eliminar/:id') 
-      async deleteUser(@Param('id')_id:string): Promise<Usuario> {
-          return this.usuarioService.delete(_id);
+    @Delete('/eliminar') 
+      async deleteUser(@Param('id')id:string): Promise<Usuario> {
+          return this.usuarioService.delete(id);
       }
    
 

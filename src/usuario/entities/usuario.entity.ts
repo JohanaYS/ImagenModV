@@ -7,7 +7,7 @@ export type UserDocument = Usuario & Document;
 @Schema({ versionKey: false })  //versionKey para deshabilitar las versiones de mongoose
 export class Usuario {
   
-  _id: mongoose.Types.ObjectId;
+  id: mongoose.Types.ObjectId;
   
   @Prop({lowercase: true, unique:true, trim:true})
   usuario: string;

@@ -31,7 +31,7 @@ export class ImagenController {
   //BUSCAR UNO
   /* @ApiBearerAuth('JWT-auth') 
   @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-  @Get(':id')
+  @Get('/buscarUno/:id')
   findOne(@Param('id') id: string) {
     return this.imagenService.findOne(id);
   }
@@ -39,7 +39,7 @@ export class ImagenController {
   //ACTUALIZAR
   /* @ApiBearerAuth('JWT-auth') //cambio 
   @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-  @Put(':id')
+  @Put('/actualizar/:id')
   update(@Param('id') id: string, @Body() updateImagenDto:UpdateImagenDto) {
     return this.imagenService.update(id, updateImagenDto)
   }
@@ -47,7 +47,7 @@ export class ImagenController {
   //ELIMINAR
   /* @ApiBearerAuth('JWT-auth') //cambio 
   @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso */
-  @Delete(':id')
+  @Delete('/eliminar/:id')
   delete(@Param('id') id: string) {
     return this.imagenService.delete(id);
   }
